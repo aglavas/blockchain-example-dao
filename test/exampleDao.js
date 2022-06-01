@@ -96,7 +96,7 @@ contract('ExampleDao', (accounts) => {
     await dao.createProposal('proposal Z', 50, accounts[8], {from: investor1});
     await dao.vote(3, {from: investor1});
     await dao.vote(3, {from: investor2});
-    expectRevert(dao.executeProposal(3), 'Proposal has expired.');
+    expectRevert(dao.executeProposal(3), 'Cannot execute proposal before end date.');
   });
 
   it('Should NOT withdraw ETH if not admin', async () => {

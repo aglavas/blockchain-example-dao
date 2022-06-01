@@ -1,5 +1,5 @@
 const ExampleDao = artifacts.require("ExampleDao");
 
 module.exports = function(deployer) {
-  deployer.deploy(ExampleDao, 2, 50, 2);
+  deployer.deploy(ExampleDao, 555, 50, 555);
 };

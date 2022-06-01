@@ -72,7 +72,7 @@ contract ExampleDao {
 
   function executeProposal(uint proposalId) external onlyAdmin() {
     Proposal storage proposal = proposals[proposalId];
-    require(block.timestamp >= proposal.end, "Proposal has expired.");
+    require(block.timestamp >= proposal.end, "Cannot execute proposal before end date.");
     require(proposal.executed == false, "Proposal can be executed only once.");
     require(((proposal.votes * 100) / totalShares) >= quorum, "Not enough votes to execute proposal.");
     proposal.executed = true;
@@ -81,6 +81,14 @@ contract ExampleDao {
 
   function withdrawEther(uint amount, address payable to) external onlyAdmin() {
     transferEther(amount, to);
+  }
+
+  function getAllProposals() external view onlyAdmin() returns (Proposal[] memory){
+    Proposal[] memory proposalArray = new Proposal[](nextProposalId);
+    for (uint i = 0; i < nextProposalId; i++) {
+        proposalArray[i] = proposals[i];
+    }
+    return proposalArray;
   }
 
   function transferEther(uint amount, address payable to) internal {
